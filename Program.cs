@@ -1,25 +1,20 @@
-using Microsoft.Extensions.Hosting;
+using System.Security.Cryptography.X509Certificates;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
 builder.Services.AddHostedService<HairpinHostedService>();
+
+// Configure Kestrel to use the certificate from the certs directory.
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ConfigureHttpsDefaults(httpsOptions =>
+    {
+        httpsOptions.ServerCertificate = new X509Certificate2("./certs/tls.pfx", "123456");
+    });
+});
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseHttpsRedirection();
-
-app.MapGet("/machinename", () => Environment.MachineName).WithName("GetMachineName").WithOpenApi();
-
+app.MapGet("/machinename", () => Environment.MachineName);
 
 app.Run();
