@@ -14,7 +14,13 @@ public class HairpinHostedService : IHostedService, IDisposable
     public HairpinHostedService(ILogger<HairpinHostedService> logger)
     {
         _logger = logger;
-        _httpClient = new HttpClient();
+
+        var handler = new HttpClientHandler
+        {
+            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+        };
+
+        _httpClient = new HttpClient(handler);
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
