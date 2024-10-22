@@ -1,7 +1,7 @@
 name: Build .NET 8 Project
 
 env:
-    REGISTRY: gchr.io
+    REGISTRY: ghcr.io
     IMAGE_NAME: ${{github.repository}}
 
 on:
