@@ -34,7 +34,7 @@ public class HairpinHostedService : IHostedService, IDisposable
                 _logger.LogWarning("API_IP_ADDRESS environment variable is not set.");
                 return;
             }
-            var response = await _httpClient.GetStringAsync($"http://{envApiIpAddress}/machinename");
+            var response = await _httpClient.GetStringAsync($"https://{envApiIpAddress}/machinename");
             _logger.LogInformation($"Response from REST service: {response}");
         }
         catch (Exception ex)
