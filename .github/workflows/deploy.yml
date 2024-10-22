@@ -32,7 +32,7 @@ jobs:
             password: ${{ secrets.GITHUB_TOKEN }}
 
         - name: Checkout repository
-          uses: actions/checkout@v3  # Add this step
+          uses: actions/checkout@v3
 
         - name: Build and push
           uses: docker/build-push-action@v6.9.0
