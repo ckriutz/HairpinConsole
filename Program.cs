@@ -7,9 +7,9 @@ builder.Services.AddHostedService<HairpinHostedService>();
 // Configure Kestrel to use the certificate from the certs directory.
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ConfigureHttpsDefaults(httpsOptions =>
+    options.ListenAnyIP(443, listenOptions =>
     {
-        httpsOptions.ServerCertificate = new X509Certificate2("./certs/tls.pfx", "123456");
+        listenOptions.UseHttps("./certs/tls.pfx", "123456"); // Path to your certificate and key
     });
 });
 
