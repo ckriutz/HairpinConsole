@@ -1,0 +1,6 @@
+@HairpinConsole_HostAddress = http://localhost:5019
+
+GET {{HairpinConsole_HostAddress}}/machinename/
+Accept: application/json
+
+###
