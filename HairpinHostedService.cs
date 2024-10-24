@@ -15,12 +15,14 @@ public class HairpinHostedService : IHostedService, IDisposable
     {
         _logger = logger;
 
-        var handler = new HttpClientHandler
+        var clientHandler = new SocketsHttpHandler
         {
-            ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+            PooledConnectionLifetime = TimeSpan.Zero
         };
 
-        _httpClient = new HttpClient(handler);
+        clientHandler.SslOptions.RemoteCertificateValidationCallback = (message, cert, chain, errors) => true;
+
+        _httpClient = new HttpClient(clientHandler);
     }
 
     public Task StartAsync(CancellationToken cancellationToken)
